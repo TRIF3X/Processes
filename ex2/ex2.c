@@ -6,8 +6,24 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+
+// The parent goes first at writing, then the child can now write in the file
+
 int main(void)
 {
-    // Your code here 
+    FILE *f;
+
+    f = fopen("text.txt", "r+");
+
+    int child = fork();
+
+    if (child == 0) {
+       fprintf(f, "Lets write into this file from the child\n\n");
+    } else {
+        fprintf(f, "the parent is writing in here\n\n");
+    };
+
+    fclose(f);
+
     return 0;
 }
