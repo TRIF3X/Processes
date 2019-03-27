@@ -9,6 +9,7 @@
 int main(void)
 {
     // Your code here
+    // init
 
     return 0;
 }
