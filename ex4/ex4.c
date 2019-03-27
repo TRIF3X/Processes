@@ -14,6 +14,8 @@ int main(void)
     if(fork() == 0) {
         printf("I'm a child!\n\n");
         char *args[] = {"./ex4demo", NULL};
+        execl("/bin/ls", "ls", NULL);
+        // 2nd call won't run
         execvp(args[0], args);
     } else {
         wait(NULL);
