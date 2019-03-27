@@ -10,7 +10,15 @@
 
 int main(void)
 {
-    // Your code here    
+
+    if(fork() == 0) {
+        printf("I'm a child!\n\n");
+        char *args[] = {"./ex4demo", NULL};
+        execvp(args[0], args);
+    } else {
+        wait(NULL);
+        printf("I'm a parent!\n\n");
+    };
 
     return 0;
 }
