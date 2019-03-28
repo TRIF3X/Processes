@@ -9,7 +9,14 @@
 
 int main(void)
 {
-    // Your code here
 
+    if (fork() == 0) {
+        printf("Hello, child process %d\n\n", (int) getpid());
+    } else {
+        // wait must have one argument, allows the parent to wait for the child process to finish before moving on with the parent
+        wait(NULL);
+        printf("Goodbye, parent process %d\n\n", (int) getpid());
+    };
+    
     return 0;
 }

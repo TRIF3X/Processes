@@ -14,13 +14,30 @@ and `clock_gettime()` should work just fine.
 #include <stdio.h>
 #include <unistd.h>
 #include <time.h>
+#include <stdint.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
 
 int main()
 {
-    // Your code here
+
+    uint64_t diff;
+    struct timespec start, end;
+    int i;
+    int count = 0;
+
+    for (i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        printf("hello world!");
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        count = count + diff;
+    };
+
+    int result = count / number_iter;
+
+	printf("elapsed time = %d nanoseconds\n", result);
     
     return 0;
 }

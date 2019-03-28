@@ -16,7 +16,31 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
+    char inbuff[MSGSIZE];
+
+    int p[2];
+
+    if (pipe(p) < 0) {
+        fprintf(stderr, "Pipe failed\n");
+        exit(1);
+    }
+
+    if(fork() == 0) {
+        printf("I'm the child process\n\n");
+
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+
+    }else{
+        wait(NULL);
+        printf("Im the parent process\n\n");
+
+        for (int i = 0; i < 3; i++) {
+            read(p[0], inbuff, MSGSIZE);
+            printf("%s from the parent\n", inbuff);
+        }
+    };
     
     return 0;
 }
